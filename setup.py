@@ -6,38 +6,16 @@ submodules = 'hbird_webots/scripts'
 
 data_files = []
 data_files.append(('share/ament_index/resource_index/packages', ['resource/' + package_name]))
-data_files.append(('share/' + package_name + '/launch', ['launch/sim_demo_LPB.launch.py']))
-data_files.append(('share/' + package_name + '/launch', ['launch/sim_demo_warehouse_ten.launch.py']))
-data_files.append(('share/' + package_name + '/launch', ['launch/sim_demo_warehouse_five.launch.py']))
-data_files.append(('share/' + package_name + '/launch', ['launch/sim_demo_warehouse_one.launch.py']))
-data_files.append(('share/' + package_name + '/launch', ['launch/sim_demo_warehouse_two.launch.py']))
+data_files.append(('share/' + package_name + '/launch', ['launch/demo.launch.py']))
 data_files.append(('share/' + package_name + '/protos', ['protos/Mark2Assembly.proto']))
 data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/base_link_good.obj']))
 data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/base_link_good.mtl']))
 data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/propeller.obj']))
 data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/propeller.mtl']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/dropoffbinwithtexture.obj']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/dropoffbinwithtexture.mtl']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/rackwithtexture.obj']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/rackwithtexture.mtl']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/takeoffwithtexture.obj']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/takeoffwithtexture.mtl']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/warehouse_bin_texture.obj']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/warehouse_bin_texture.mtl']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/full_warehouse_rack.obj']))
-data_files.append(('share/' + package_name + '/protos/meshes', ['protos/meshes/full_warehouse_rack.mtl']))
 data_files.append(('share/' + package_name + '/protos/textures', ['protos/textures/cotton beige.jpg']))
 data_files.append(('share/' + package_name + '/protos/textures', ['protos/textures/fast_helix.png']))
 data_files.append(('share/' + package_name + '/worlds', [
-    'worlds/LPB.wbt']))
-data_files.append(('share/' + package_name + '/worlds', [
-    'worlds/warehouse_ten.wbt']))
-data_files.append(('share/' + package_name + '/worlds', [
-    'worlds/warehouse_five.wbt']))
-data_files.append(('share/' + package_name + '/worlds', [
-    'worlds/warehouse_one.wbt']))
-data_files.append(('share/' + package_name + '/worlds', [
-    'worlds/warehouse_two.wbt']))
+    'worlds/flight_arena.wbt']))
 data_files.append(('share/' + package_name + '/resource', [
     'resource/hbird_drone.urdf'
 ]))
@@ -56,9 +34,10 @@ setup(
     tests_require=['pytest'],
     description='Hbird drone robot ROS2 interface for Webots.',
     entry_points={
-        # 'console_scripts': [
-        #     'cf_ros_driver = cf_ros_test.cf_ros_driver:main'
-        # ],
-        'launch.frontend.launch_extension': ['launch_ros = launch_ros']
+        'console_scripts': [
+            # 'agent_control_node = hbird_webots.agent_control_node:main',
+            'hbird_sim_node = hbird_webots.hbird_sim_node:main'
+        ],
+        # 'launch.frontend.launch_extension': ['launch_ros = launch_ros']
     }
 )

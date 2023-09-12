@@ -54,6 +54,6 @@
             <gyroName>gyro</gyroName>
         </plugin>
 
-        <plugin type="hbird_webots.crazyflie_sim_node.HbirdDriver" />
+        <plugin type="hbird_webots.hbird_sim_node.HbirdDriver" />
     </webots>
 </robot>

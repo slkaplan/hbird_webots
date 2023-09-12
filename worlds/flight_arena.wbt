@@ -1,0 +1,38 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "../protos/Mark2Assembly.proto"
+
+WorldInfo {
+  basicTimeStep 8
+  defaultDamping Damping {
+    linear 0.5
+    angular 0.5
+  }
+}
+Viewpoint {
+  orientation -0.5773502691896257 0.5773502691896257 0.5773502691896257 2.0943245915045035
+  position -0.0003283560868616237 -0.00032834271992869226 12.626736235494263
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 7.0104 5.4864
+  tileSize 1 1
+  appearance Parquetry {
+    type "light strip"
+    colorOverride 0.1 0.1 0.1
+  }
+}
+
+Mark2Assembly {
+  translation 0.0156 -0.0336 0.31
+  rotation 0 0 1 3.14159
+  name "HB1"
+  controller "<extern>"
+}
