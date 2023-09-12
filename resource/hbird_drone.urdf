@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot name="Hbird Webots">
+    <webots>
+        <device reference="gps" type="GPS">
+            <ros>
+                <enabled>true</enabled>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="range_right" type="DistanceSensor">
+            <ros>
+                <topicName>/right_sensor</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+
+
+        <device reference="range_back" type="DistanceSensor">
+            <ros>
+                <topicName>/back_sensor</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+
+        <device reference="range_left" type="DistanceSensor">
+            <ros>
+                <topicName>/left_sensor</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+
+        <device reference="range_front" type="DistanceSensor">
+            <ros>
+                <topicName>/laser_scan</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+
+        <device reference="lidar" type="Lidar">
+            <ros>
+                <updateRate>10</updateRate>
+                <topicName>/laser_scan</topicName>
+                <alwaysOn>True</alwaysOn>
+                <frameName>hokuyo</frameName>
+            </ros>
+        </device>
+
+        <plugin type="webots_ros2_driver::Ros2IMU">
+            <enabled>true</enabled>
+            <topicName>/imu</topicName>
+            <alwaysOn>true</alwaysOn>
+            <frameName>imu_link</frameName>
+            <inertialUnitName>inertial_unit</inertialUnitName>
+            <gyroName>gyro</gyroName>
+        </plugin>
+
+        <plugin type="hbird_webots.crazyflie_sim_node.HbirdDriver" />
+    </webots>
+</robot>
