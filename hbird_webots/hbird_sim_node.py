@@ -13,7 +13,7 @@ from .scripts.controller import Controller3D
 from .scripts.utils import HBParams
 
 
-FF_VERTICAL_THRUST = 58
+FF_VERTICAL_THRUST = 55
 
 
 # HBIRD DRIVER CLASS
@@ -41,7 +41,6 @@ class HbirdDriver:
             propeller.setVelocity(0)
         
 
-
         # initialize ROS2 node
         rclpy.init(args=None)
         self._node = rclpy.create_node('hbird_sim_node')
@@ -49,7 +48,7 @@ class HbirdDriver:
 
         # TODO: Add the parameter getter and the parameter declaration
         param_descriptor = ParameterDescriptor(description='Defines agent ID.')
-        self._node.declare_parameter('agent_id', 'HB0', param_descriptor)
+        self._node.declare_parameter('agent_id', 'HB1', param_descriptor)
         self._agent_id = self._node.get_parameter('agent_id')._value
         
         # define ROS2 topics
@@ -62,7 +61,6 @@ class HbirdDriver:
 				            self.pos_setpoint_callback, 10)
             # publisher
         self._state_publisher = self._node.create_publisher(State, vehicle_state_topic, 10)
-
 
 
         # get pid_gains from yaml file
@@ -79,6 +77,7 @@ class HbirdDriver:
 
         # initialize variables
         self.pos_setpoint = Waypoint()
+        self.agent_state = State()
         
 
 
@@ -86,11 +85,11 @@ class HbirdDriver:
         """main Webots controller step function. It is run once every simulation step"""
 
 
-        # get vehicle state
-        vehicle_state = self.get_vehicle_states()
+        # get agent state
+        self.agent_state = self.get_agent_states()
 
         # compute force/torque commands [u1,...,u4]
-        U = self._controller.compute_commands(self.pos_setpoint, vehicle_state)
+        U = self._controller.compute_commands(self.pos_setpoint, self.agent_state)
 
 
         # apply mixing algorithm to compute prop velocities
@@ -100,6 +99,18 @@ class HbirdDriver:
         # set propeller velocities
         self.set_prop_velocities(prop_vel)
 
+
+
+
+    def motor_mixing_matrix(self, U):
+        prop_vel = np.array([0.,0.,0.,0.])
+
+        prop_vel[0] = FF_VERTICAL_THRUST + U[0] - U[3] - U[2] - U[1]
+        prop_vel[1] = FF_VERTICAL_THRUST + U[0] + U[3] + U[2] - U[1]
+        prop_vel[2] = FF_VERTICAL_THRUST + U[0] + U[3] - U[2] + U[1]
+        prop_vel[3] = FF_VERTICAL_THRUST + U[0] - U[3] + U[2] + U[1]
+
+        return prop_vel
     
 
     def set_prop_velocities(self, prop_vel):
@@ -113,34 +124,28 @@ class HbirdDriver:
 
     
 
-    def motor_mixing_matrix(self, U):
-        prop_vel = np.array([0.,0.,0.,0.])
 
-        prop_vel[0] = FF_VERTICAL_THRUST + U[0] - U[3] - U[2] - U[1]
-        prop_vel[1] = FF_VERTICAL_THRUST + U[0] + U[3] + U[2] - U[1]
-        prop_vel[2] = FF_VERTICAL_THRUST + U[0] + U[3] - U[2] + U[1]
-        prop_vel[3] = FF_VERTICAL_THRUST + U[0] - U[3] + U[2] + U[1]
-
-        return prop_vel
-
-
-
-    def get_vehicle_states(self):
+    def get_agent_states(self):
         current_state = State()
 
         current_state.position.x = self._gps.getValues()[0]
         current_state.position.y = self._gps.getValues()[1]
         current_state.position.z = self._gps.getValues()[2]
 
+        current_state.velocity.x = self._gps.getSpeedVector()[0]
+        current_state.velocity.y = self._gps.getSpeedVector()[1]
+        current_state.velocity.z = self._gps.getSpeedVector()[2]
+
         current_state.orientation.x = self._imu.getRollPitchYaw()[0]
         current_state.orientation.y = self._imu.getRollPitchYaw()[1]
         current_state.orientation.z = self._imu.getRollPitchYaw()[2]
 
-        #TODO: current_state.velocity is not yet available...
-
         current_state.angular_velocity.x = self._gyro.getValues()[0]
         current_state.angular_velocity.y = self._gyro.getValues()[1]
         current_state.angular_velocity.z = self._gyro.getValues()[2]
+
+        # publish the state
+        self._state_publisher.publish(current_state)
 
         return current_state
 

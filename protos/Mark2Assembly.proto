@@ -54,17 +54,8 @@ PROTO Mark2Assembly [
       InertialUnit {
         name "inertial_unit"
       }
-      Lidar {
-        name "lidar"
-        horizontalResolution 36
-        fieldOfView 3.14
-        numberOfLayers 1
-        maxRange 6
-      }
-#      Display {
-#       width 400
-#        height 300
-#      }
+
+
       DEF Prop_1 Propeller {
         shaftAxis 0 0 1
         centerOfThrust -0.1778 0.1778 -0.0026033984

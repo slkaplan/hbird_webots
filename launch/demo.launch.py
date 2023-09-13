@@ -43,7 +43,8 @@ def generate_launch_description():
     agent_control_node = Node(
             package="hbird_navigation",
             executable="agent_control_node",
-            output='screen'
+            output='screen',
+            name='agent_control_node'
         )
 
     hbird_sim_node = WebotsController(
