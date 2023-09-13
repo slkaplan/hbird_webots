@@ -83,7 +83,7 @@ class HbirdDriver:
 
     def step(self):
         """main Webots controller step function. It is run once every simulation step"""
-
+        rclpy.spin_once(self._node, timeout_sec=0)
 
         # get agent state
         self.agent_state = self.get_agent_states()
@@ -105,10 +105,10 @@ class HbirdDriver:
     def motor_mixing_matrix(self, U):
         prop_vel = np.array([0.,0.,0.,0.])
 
-        prop_vel[0] = FF_VERTICAL_THRUST + U[0] - U[3] - U[2] - U[1]
-        prop_vel[1] = FF_VERTICAL_THRUST + U[0] + U[3] + U[2] - U[1]
-        prop_vel[2] = FF_VERTICAL_THRUST + U[0] + U[3] - U[2] + U[1]
-        prop_vel[3] = FF_VERTICAL_THRUST + U[0] - U[3] + U[2] + U[1]
+        prop_vel[0] = FF_VERTICAL_THRUST + U[0] + U[3] + U[2] + U[1]
+        prop_vel[1] = FF_VERTICAL_THRUST + U[0] - U[3] - U[2] + U[1]
+        prop_vel[2] = FF_VERTICAL_THRUST + U[0] - U[3] + U[2] - U[1]
+        prop_vel[3] = FF_VERTICAL_THRUST + U[0] + U[3] - U[2] - U[1]
 
         return prop_vel
     
