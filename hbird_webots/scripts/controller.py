@@ -7,15 +7,15 @@ class Controller3D():
 
     You are to implement the "compute_commands" method.
     """
-    def __init__(self, cfparams, pid_gains, dt=0):
+    def __init__(self, hbparams, pid_gains, dt=0):
         """
         Inputs:
-        - cfparams (CrazyflieParams dataclass):     model parameter class for the crazyflie
+        - hbparams (HBarams dataclass):             model parameter class for the drone
         - pid_gains (dict):                         pid gains
 
         N.B. pid_gains is a dictionary structure where the keys are 'kp_x', 'kd_z', etc.
         """
-        self.params = cfparams
+        self.params = hbparams
 
         # set control gains here
 
@@ -24,12 +24,11 @@ class Controller3D():
     def compute_commands(self, setpoint, state):
         """
         Inputs:
-        - setpoint (TrajPoint dataclass):   the desired control setpoint
-        - state (State dataclass):          the current state of the system
+        - setpoint (Waypoint):      the desired control setpoint
+        - state (State):            the current state of the system
         Returns:
         - U (np.array):     array of control inputs {u1-u4}
 
-        N.B. TrajPoint is a new dataclass. Please check it out from the utils.py script
         """
         U = np.array([0.,0.,0.,0.])
 
