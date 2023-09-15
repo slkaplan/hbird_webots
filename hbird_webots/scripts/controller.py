@@ -19,6 +19,32 @@ class Controller3D():
 
         # set control gains here
 
+        self.kp_x = pid_gains["kp_x"]
+        self.kp_y = pid_gains["kp_y"]
+        self.kp_z = pid_gains["kp_z"]
+        
+        self.ki_x = pid_gains["ki_x"]
+        self.ki_y = pid_gains["ki_y"]
+        self.ki_z = pid_gains["ki_Z"]
+        
+        self.kd_x = pid_gains["kd_x"]
+        self.kd_y = pid_gains["kd_y"]
+        self.kd_z = pid_gains["kd_z"]
+
+        # rotational 
+        self.kp_phi = pid_gains["kp_phi"]
+        self.kp_theta = pid_gains["kp_theta"]
+        self.kp_psi = pid_gains["kp_psi"]
+        
+        self.ki_phi = pid_gains["ki_phi"]
+        self.ki_theta = pid_gains["ki_theta"]
+        self.ki_psi = pid_gains["ki_psi"]
+        
+        self.kd_p = pid_gains["kd_p"]
+        self.kd_q = pid_gains["kd_q"]
+        self.kd_r = pid_gains["kd_r"]
+
+        
 
 
     def compute_commands(self, setpoint, state):
