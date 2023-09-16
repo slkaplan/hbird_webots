@@ -44,8 +44,6 @@ class Controller3D():
         self.kd_q = pid_gains["kd_q"]
         self.kd_r = pid_gains["kd_r"]
 
-        
-
 
     def compute_commands(self, setpoint, state):
         """
@@ -58,8 +56,14 @@ class Controller3D():
         """
         U = np.array([0.,0.,0.,0.])
 
-        # your code here
+        e = np.array([
+            setpoint.position.z - state.position.z,
+        ])
 
-        
+        e_dot = np.array([
+            0 - state.velocity.z
+        ])
+
+        U[0] = self.params.mass * (self.kp_z * e[0] + self.kd_z * e_dot[0] + self.params.g)
 
         return U
