@@ -25,7 +25,7 @@ class Controller3D():
         
         self.ki_x = pid_gains["ki_x"]
         self.ki_y = pid_gains["ki_y"]
-        self.ki_z = pid_gains["ki_Z"]
+        self.ki_z = pid_gains["ki_z"]
         
         self.kd_x = pid_gains["kd_x"]
         self.kd_y = pid_gains["kd_y"]
@@ -57,6 +57,10 @@ class Controller3D():
 
         """
         U = np.array([0.,0.,0.,0.])
+
+        setpoint.position.z
+
+        
 
         # your code here
 
