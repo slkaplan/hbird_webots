@@ -89,8 +89,8 @@ class Controller3D():
         e_dot_theta = 0 - state.angular_velocity.y
         e_dot_psi = 0 - state.angular_velocity.z
 
-        U[1] = self.kp_phi * e_phi + self.kd_p * e_dot_phi
-        U[2] = self.kp_theta * e_theta +  self.kd_q * e_dot_theta
-        U[3] = self.kp_psi * e_psi + self.kd_r * e_dot_psi
+        # U[1] = self.kp_phi * e_phi + self.kd_p * e_dot_phi
+        # U[2] = self.kp_theta * e_theta +  self.kd_q * e_dot_theta
+        # U[3] = self.kp_psi * e_psi + self.kd_r * e_dot_psi
 
         return U
