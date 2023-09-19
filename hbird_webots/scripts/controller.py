@@ -56,17 +56,14 @@ class Controller3D():
         """
         U = np.array([0.,0.,0.,0.])
 
-<<<<<<< HEAD
         setpoint.position.z
 
         
 
         # your code here
-=======
         e = np.array([
             setpoint.position.z - state.position.z,
         ])
->>>>>>> 007da6138e16f8435681d5e22e90915d335fe2b6
 
         e_dot = np.array([
             0 - state.velocity.z
