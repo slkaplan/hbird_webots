@@ -1,5 +1,7 @@
 # Mini-Project 1 Writeup
 
+![](https://github.com/slkaplan/hbird_webots/blob/main/actual.gif)
+
 ## Controller Implementation
 
 Our controller implementation is in this repository. Here is a link to that file:
