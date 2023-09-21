@@ -25,7 +25,7 @@ class Controller3D():
         
         self.ki_x = pid_gains["ki_x"]
         self.ki_y = pid_gains["ki_y"]
-        self.ki_z = pid_gains["ki_Z"]
+        self.ki_z = pid_gains["ki_z"]
         
         self.kd_x = pid_gains["kd_x"]
         self.kd_y = pid_gains["kd_y"]
@@ -75,12 +75,14 @@ class Controller3D():
         U[0] = self.params.mass * (z_dotdot_c + self.params.g)
         phi_d = (1 / self.params.g) * (x_dotdot_c * s_psi - y_dotdot_c * c_psi)
         theta_d = (1 / self.params.g) * (x_dotdot_c * c_psi - y_dotdot_c * s_psi)
+        #psi_d = current heading
 
         # TOOD: compute angular rate error
 
         # Attitude controller
         # FIXME: not sure how phi/theta correspond to roll and pitch;
         # orientation.x, y, and z are yaw, pitch and roll, respectively (see hbird_sim_node.py)
+        #i think there's some funky stuff in here with p,q,r
         e_phi = phi_d - state.orientation.x
         e_theta = theta_d - state.orientation.y
         e_psi = setpoint.heading - state.orientation.z
