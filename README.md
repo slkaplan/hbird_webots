@@ -3,7 +3,7 @@
 ## Controller Implementation
 
 Our controller implementation is in this repository. Here is a link to that file:
-
+https://github.com/slkaplan/hbird_webots/blob/main/hbird_webots/scripts/controller.py
 
 ## Agent Control Node Implementation
 
