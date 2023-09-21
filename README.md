@@ -1,48 +1,46 @@
-# Hummingbird Webots Simulation Package
+# Mini-Project 1 Writeup
 
-## System Setup
+## Controller Implementation
 
-### 1. Setup ROS2 workspace (only if you don't already have a ros2 workspace)
-
-```
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws/src
-```
-
-### 2. Clone the repositories
-
-```
-git clone https://github.com/Olin-HAIR-Lab/hbird_webots.git
-```
+Our controller implementation is in this repository. Here is a link to that file:
 
 
-In the hbird_webots package, the files of importance are:
+## Agent Control Node Implementation
 
-_hbird_webots folder_
+Our agent_control_node is in another repository. Here is a link to that repository and file:
+https://github.com/slkaplan/hbird_common/blob/main/hbird_navigation/hbird_navigation/agent_control_node.py
 
-- scripts folder for any supplementary python scripts that are not nodes
-- chbird_sim_node.py file which is the ROS node that receives position setpoints
- from the agent_control_node and executes them on the drones in Webots
+## Gifs of Motion
 
-_launch folder_
+## Write-up
 
-- demo.launch.py, the launch file for the flight arena using one HB vehicle
+### What did you learn from this? What did you not know before this assignment?
 
-_protos folder_
+We learned how to deal with and troubleshoot codebases that we did not write from scratch. This was additionally troublesome as we all had not worked with ROS in a while, so we spent a good deal of time relearning some ROS command-line debug tools. 
+More importantly, we did not know any drone physics or PID controls prior to this assignment. While we probably could not write the Hummingbird simulator from scratch, we are pretty confident at implementing simple PID control loops.
 
-- meshes folder, holds all .obj files for each CAD (racks, dropoff bins, and
-  takeoff pads) along with their respective.mtl files, and the STL_files folder
-  holds the STL files for the base body of the drone and the propeller
-- textures folder, holds the .jpg images for the colors of the rack bins and the
-  image displayed in Webots when the propellers move quickly
-- Mark2Assembly.proto is the proto file for the Mark 2 drone
+### What was the most difficult aspect of the assignment?
 
-_resource folder_
+The most difficult conceptual part of the assignment was figuring out how to tune the cascaded controllers. We knew that we couldn’t tune both controllers at once and had to tune them independently. But it was difficult conceptually to figure out which gains and setpoints to use to isolate specific parts of the controller to turn different things. We had many simulation runs of the drone flying around uncontrollably and crashing before we figured it out. 
 
-- hbird_drone.urdf is the URDF file that the webots_ros_driver ROS node uses to
-  connect the controller and sensor plugins declared in the URDF to the robot in
-  Webots
+### What was the easiest or most straightforward aspect of the assignment?
 
-_worlds folder_
+The easiest part of the assignment was writing the controller specifically for the z height. We had already written a controller for z height for the warmup and we could transfer it over pretty easily. In a similar vein, it was relatively straightforward to take the dynamics equations given to us in class and turn them into code for the other parts of the controller. 
 
-- flight_arena.wbt, the Webots world file that contains a simple, empty flight arena
+### How long did this assignment take? What took the most time (Setup? Figuring out the codebase/ROS2? Coding in Python? Exploring the questions?)?
+
+This assignment took approximately 10 hours. Most of the time was spent on debugging issues with the simulator and understanding the codebase. The actual writing of the control code went really quickly, especially after having done the warm-up. Tuning the controller was also relatively quick. But trying to understand which parts of the existing codebase did what and trying to debug issues when the simulator wouldn’t run correctly took up a lot of our time. 
+
+### What did you learn about PID controllers that we didn’t explicitly cover in class or in this assignment?
+
+We had an interesting conversation about specifically tuning the controller for the heading angles. The setpoint for our heading originally was 2pi. This meant, if the robot overshot 2pi, instead of the angle reading slightly over 2pi, it would wrap back around to reading just over 0. This meant that the robot would try to correct its error by turning the long way around the circle back to 2pi and would just spin in circles with no oscillation. PID controllers rely on oscillation to eventually reach the setpoint so we needed to factor this in when we set our heading setpoint. 
+
+### What more would you like to learn about controls?
+
+Sam: I would like to learn some of the derivations (from scratch). I know the point of the assignment was to be fairly plug-and-play, but I never truly remember/understand something until I am comfortable deriving it myself. 
+
+I would also like to learn why we needed to adjust the heading in order for our controls algorithm to work!
+
+Liv: I enjoy dynamics and understanding the math and physics behind why things move. I feel like I am comfortable writing a controller to control U. But I feel less confident that I understand how U is used to actually control the motion of the robot. I’d like to understand more about the link between the low level control of individual rotors and the higher level control of setpoints and positioning. 
+
+
