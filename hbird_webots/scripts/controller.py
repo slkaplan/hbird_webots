@@ -75,9 +75,15 @@ class Controller3D():
         U[0] = self.params.mass * (z_dotdot_c + self.params.g)
         phi_d = (1 / self.params.g) * (x_dotdot_c * s_psi - y_dotdot_c * c_psi)
         theta_d = (1 / self.params.g) * (x_dotdot_c * c_psi - y_dotdot_c * s_psi)
-        #psi_d = current heading
+        # phi_d = .25
+        # theta_d = .25
+        # psi_d = current heading
 
         # TOOD: compute angular rate error
+        e_p_dot = 0 - state.angular_velocity.x
+        e_q_dot = 0 - state.angular_velocity.y
+        e_r_dot = 0 - state.angular_velocity.z
+    
 
         # Attitude controller
         # FIXME: not sure how phi/theta correspond to roll and pitch;
@@ -85,11 +91,15 @@ class Controller3D():
         #i think there's some funky stuff in here with p,q,r
         e_phi = phi_d - state.orientation.x
         e_theta = theta_d - state.orientation.y
-        e_psi = setpoint.heading - state.orientation.z
+        e_psi = state.orientation.z - setpoint.heading  
 
-        e_dot_phi = 0 - state.angular_velocity.x
-        e_dot_theta = 0 - state.angular_velocity.y
-        e_dot_psi = 0 - state.angular_velocity.z
+        # e_dot_phi = 0 - state.angular_velocity.x
+        # e_dot_theta = 0 - state.angular_velocity.y
+        # e_dot_psi = 0 - state.angular_velocity.z
+
+        U[1] = (self.kd_p * e_p_dot) + (self.kp_phi * e_phi)
+        U[2] = (self.kd_q * e_q_dot) + (self.kp_theta * e_theta)
+        U[3] = (self.kd_r * e_r_dot) + (self.kp_psi * e_psi)
 
         # U[1] = self.kp_phi * e_phi + self.kd_p * e_dot_phi
         # U[2] = self.kp_theta * e_theta +  self.kd_q * e_dot_theta
